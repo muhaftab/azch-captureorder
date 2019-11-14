@@ -3,10 +3,10 @@ variables:
   - group: captureorder-variables # Variable Group containing 'mongoHost', 'mongoUser' and the secret 'mongoPassword'
 
   - name: dockerRegistryServiceConnection
-    value: 'containerRegistryConnection' # make sure it matches the name you used in the service connection
+    value: 'conn-acrmuaft' # make sure it matches the name you used in the service connection
   
   - name: acrEndpoint
-    value: 'uniqueacrname.azurecr.io' # replace with container registry endpoint
+    value: 'acrmuaft.azurecr.io' # replace with container registry endpoint
 
   - name: tag
     value: '$(Build.BuildId)'
@@ -40,7 +40,7 @@ stages:
 
   variables:
   - name: k8sNamespace # Kubernetes Namespace to deploy to. This variable is scoped to the DeployDev stage.
-    value: 'dev'
+    value: 'test'
       
   jobs:
   - deployment: DeployDev
@@ -48,7 +48,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
 
-    environment: 'aksworkshop.dev' # name of the environment to target [env name.namespace]. This will pull in the Kubernetes service connection automatically
+    environment: 'aksworkshop.test' # name of the environment to target [env name.namespace]. This will pull in the Kubernetes service connection automatically
 
     strategy:
       runOnce:
